@@ -1,0 +1,1552 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/8/2024 3:19:17 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PSYCHO"
+  DTS:CreatorName="PSYCHO\Psycho"
+  DTS:DTSID="{0E7450FC-800D-4A8B-ABDC-F29EDDB7A975}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5556.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="36"
+  DTS:VersionGUID="{291AD272-DEB8-4734-8E97-240390149CA5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.destination_database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{08717C9E-BE10-4872-A3EA-437D5B8AF115}"
+      DTS:ObjectName="LocalHost.destination_database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=destination_database;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{08717C9E-BE10-4872-A3EA-437D5B8AF115}LocalHost.destination_database;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.source_database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A3A4772C-9F10-467C-BDEE-B1070CBFC234}"
+      DTS:ObjectName="LocalHost.source_database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=source_database;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{A3A4772C-9F10-467C-BDEE-B1070CBFC234}LocalHost.source_database;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Psycho.70-461]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{842821C5-C717-4F64-974C-D541B7E2EDB7}"
+      DTS:ObjectName="Psycho.70-461">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=Psycho;Initial Catalog=70-461;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{842821C5-C717-4F64-974C-D541B7E2EDB7}Psycho.70-461;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Destination Loading"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2B1710EB-EF79-459D-AEC2-B49CCC92CE91}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Destination Loading"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Destination Loading\Age Calculation"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Age Calculation"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Destination Loading\Age Calculation.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Destination Loading\Age Calculation.Inputs[Derived Column Input].Columns[DateOfBirth]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DateOfBirth"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[DateOfBirth]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Destination Loading\Age Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Output].Columns[Age]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Output].Columns[Age]"
+                      name="Age"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)(([DATEDIFF]("DD",(DT_DBTIMESTAMP)#{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[DateOfBirth]},[GETDATE]()) / 365.25))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)((DATEDIFF("DD",(DT_DBTIMESTAMP)DateOfBirth,GETDATE()) / 365.25))</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Destination Loading\Age Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Destination Loading\Destination Loading"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination Loading"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Transformed_Employee_Info]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Destination Loading\Destination Loading.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.destination_database]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.destination_database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].Columns[Salary]"
+                      cachedDataType="i4"
+                      cachedName="Salary"
+                      externalMetadataColumnId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Salary]"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]" />
+                    <inputColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].Columns[Age]"
+                      cachedDataType="i4"
+                      cachedName="Age"
+                      externalMetadataColumnId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Age]"
+                      lineageId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Output].Columns[Age]" />
+                    <inputColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].Columns[Salary_Grade]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="Salary_Grade"
+                      externalMetadataColumnId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Salary_Grade]"
+                      lineageId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Output].Columns[Salary_Grade]" />
+                    <inputColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].Columns[Full_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Full_Name"
+                      externalMetadataColumnId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Full_Name]"
+                      lineageId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Output].Columns[Full_Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Age]"
+                      dataType="i4"
+                      name="Age" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Salary]"
+                      dataType="i4"
+                      name="Salary" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Salary_Grade]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Salary_Grade" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input].ExternalColumns[Full_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="152"
+                      name="Full_Name" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Destination Loading\Destination Loading.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Destination Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Destination Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Destination Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Destination Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Destination Loading\Extracting Data From Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Extracting Data From Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Employee_info]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Destination Loading\Extracting Data From Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.source_database]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.source_database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeFirstName]"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]"
+                      name="EmployeeFirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeMiddleName]"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]"
+                      name="EmployeeMiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeLastName]"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeLastName]"
+                      name="EmployeeLastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[DateOfBirth]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[DateOfBirth]"
+                      length="10"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[DateOfBirth]"
+                      name="DateOfBirth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[Salary]"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]"
+                      name="Salary"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeFirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeMiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeLastName" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[DateOfBirth]"
+                      dataType="wstr"
+                      length="10"
+                      name="DateOfBirth" />
+                    <externalMetadataColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].ExternalColumns[Salary]"
+                      dataType="i4"
+                      name="Salary" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeFirstName]"
+                      name="EmployeeFirstName" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeMiddleName]"
+                      name="EmployeeMiddleName" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[EmployeeLastName]"
+                      name="EmployeeLastName" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[DateOfBirth]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[DateOfBirth]"
+                      name="DateOfBirth" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[Salary]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[Salary]"
+                      name="Salary" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Destination Loading\Full_Name Calculation"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Full_Name Calculation"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input].Columns[EmployeeFirstName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeFirstName"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]" />
+                    <inputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input].Columns[EmployeeMiddleName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeMiddleName"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]" />
+                    <inputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input].Columns[EmployeeLastName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeLastName"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeLastName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Output].Columns[Full_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Output].Columns[Full_Name]"
+                      name="Full_Name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,50,1252)(#{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]} + " " + ([ISNULL](#{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]}) ? "" : #{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]} + " ") + #{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[EmployeeLastName]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,50,1252)(EmployeeFirstName + " " + (ISNULL(EmployeeMiddleName) ? "" : EmployeeMiddleName + " ") + EmployeeLastName)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Destination Loading\Salary_Grade Calculation"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Salary_Grade Calculation"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Destination Loading\Salary_Grade Calculation.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Destination Loading\Salary_Grade Calculation.Inputs[Derived Column Input].Columns[Salary]"
+                      cachedDataType="i4"
+                      cachedName="Salary"
+                      lineageId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Destination Loading\Salary_Grade Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Output].Columns[Salary_Grade]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="2"
+                      lineageId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Output].Columns[Salary_Grade]"
+                      name="Salary_Grade"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,2,1252)(#{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]} &gt; 1000000 ? "A" : #{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]} &gt; 500000 ? "B" : #{Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output].Columns[Salary]} &gt; 250000 ? "C" : "D")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,2,1252)(Salary &gt; 1000000 ? "A" : Salary &gt; 500000 ? "B" : Salary &gt; 250000 ? "C" : "D")</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Destination Loading\Salary_Grade Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Destination Loading.Paths[Derived Column Output]"
+              endId="Package\Destination Loading\Salary_Grade Calculation.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Destination Loading\Age Calculation.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Destination Loading.Paths[Derived Column Output1]"
+              endId="Package\Destination Loading\Destination Loading.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Destination Loading\Salary_Grade Calculation.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Destination Loading.Paths[Derived Column Output2]"
+              endId="Package\Destination Loading\Age Calculation.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Destination Loading\Full_Name Calculation.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Destination Loading.Paths[OLE DB Source Output]"
+              endId="Package\Destination Loading\Full_Name Calculation.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Destination Loading\Extracting Data From Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Source Loading"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{16C65A46-2F5E-49F8-BEC9-3DD0C80399BE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Source Loading"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Source Loading\Employee Data Retrieval"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Employee Data Retrieval"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[tblEmployee]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Source Loading\Employee Data Retrieval.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Psycho.70-461]"
+                  connectionManagerRefId="Package.ConnectionManagers[Psycho.70-461]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeFirstName]"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]"
+                      name="EmployeeFirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeMiddleName]"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]"
+                      name="EmployeeMiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeLastName]"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeLastName]"
+                      name="EmployeeLastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[DateOfBirth]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[DateOfBirth]"
+                      length="10"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[DateOfBirth]"
+                      name="DateOfBirth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeNumber]"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeNumber]"
+                      name="EmployeeNumber"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeNumber]"
+                      dataType="i4"
+                      name="EmployeeNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeFirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeMiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeLastName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[EmployeeGovernmentID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="EmployeeGovernmentID" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[DateOfBirth]"
+                      dataType="wstr"
+                      length="10"
+                      name="DateOfBirth" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].ExternalColumns[Department]"
+                      codePage="1252"
+                      dataType="str"
+                      length="19"
+                      name="Department" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeFirstName]"
+                      name="EmployeeFirstName" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeMiddleName]"
+                      name="EmployeeMiddleName" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeLastName]"
+                      name="EmployeeLastName" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[DateOfBirth]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[DateOfBirth]"
+                      name="DateOfBirth" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeNumber]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Error Output].Columns[EmployeeNumber]"
+                      name="EmployeeNumber" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Source Loading\Loading into Source"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Loading into Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Employee_info]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Source Loading\Loading into Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.source_database]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.source_database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].Columns[EmployeeFirstName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeFirstName"
+                      externalMetadataColumnId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeFirstName]"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeFirstName]" />
+                    <inputColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].Columns[EmployeeMiddleName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeMiddleName"
+                      externalMetadataColumnId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeMiddleName]"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeMiddleName]" />
+                    <inputColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].Columns[EmployeeLastName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="EmployeeLastName"
+                      externalMetadataColumnId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeLastName]"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeLastName]" />
+                    <inputColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].Columns[DateOfBirth]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DateOfBirth"
+                      externalMetadataColumnId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[DateOfBirth]"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[DateOfBirth]" />
+                    <inputColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].Columns[Salary]"
+                      cachedDataType="i4"
+                      cachedName="Salary"
+                      externalMetadataColumnId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[Salary]"
+                      lineageId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Output].Columns[Salary]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeFirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeFirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeMiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeMiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeLastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="EmployeeLastName" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[DateOfBirth]"
+                      dataType="wstr"
+                      length="10"
+                      name="DateOfBirth" />
+                    <externalMetadataColumn
+                      refId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input].ExternalColumns[Salary]"
+                      dataType="i4"
+                      name="Salary" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Source Loading\Loading into Source.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Source Loading\Loading into Source.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Loading into Source.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Source Loading\Loading into Source.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Loading into Source.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Source Loading\Salary Calculation"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Salary Calculation"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Source Loading\Salary Calculation.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Source Loading\Salary Calculation.Inputs[Derived Column Input].Columns[EmployeeNumber]"
+                      cachedDataType="i4"
+                      cachedName="EmployeeNumber"
+                      lineageId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Source Loading\Salary Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Output].Columns[Salary]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Output].Columns[Salary]"
+                      name="Salary"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output].Columns[EmployeeNumber]} * 1000</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">EmployeeNumber * 1000</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Source Loading\Salary Calculation.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Source Loading.Paths[Derived Column Output]"
+              endId="Package\Source Loading\Loading into Source.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Source Loading\Salary Calculation.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Source Loading.Paths[OLE DB Source Output]"
+              endId="Package\Source Loading\Salary Calculation.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Source Loading\Employee Data Retrieval.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EC8BEB2F-8E03-4DFF-BBE3-F2BDE7D618B4}"
+      DTS:From="Package\Source Loading"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Destination Loading" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{DAD2656F-F18D-4437-BB39-75D96CDDA66A}"
+      DTS:EventID="3145776"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{3C7D04D1-816A-40CC-B109-4668FFBDD6E0}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error_Handling"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2B4129C2-96D5-496F-B245-3AC3277AD12F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error_Handling"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08717C9E-BE10-4872-A3EA-437D5B8AF115}"
+              SQLTask:SqlStatementSource="insert into LogError(Package_Name,Error_Messages)&#xA;values(?,?)"
+              SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Destination Loading"
+          TopLeft="142,222" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Source Loading"
+          TopLeft="156,101" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="232,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79"
+              Start="0,0"
+              End="0,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="153,42"
+          Id="Package.EventHandlers[OnError]\Error_Handling"
+          TopLeft="118,94" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Destination Loading">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Destination Loading\Full_Name Calculation"
+          TopLeft="206.5,174.5" />
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Destination Loading\Destination Loading"
+          TopLeft="220,402" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Destination Loading\Salary_Grade Calculation"
+          TopLeft="200,333" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Destination Loading\Extracting Data From Source"
+          TopLeft="185,102" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Destination Loading\Age Calculation"
+          TopLeft="231,261" />
+        <EdgeLayout
+          Id="Package\Destination Loading.Paths[Derived Column Output1]"
+          TopLeft="305,375">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Destination Loading.Paths[Derived Column Output]"
+          TopLeft="305.5,303">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30"
+              Start="0,0"
+              End="0,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Destination Loading.Paths[OLE DB Source Output]"
+          TopLeft="298.25,144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30.5"
+              Start="0,0"
+              End="0,23">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Destination Loading.Paths[Derived Column Output2]"
+          TopLeft="305.25,216.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.5"
+              Start="0,0"
+              End="0,37">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Destination Loading\Destination Loading">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Destination Loading\Extracting Data From Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Source Loading">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Source Loading\Loading into Source"
+          TopLeft="221,271" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Source Loading\Salary Calculation"
+          TopLeft="230,147" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Source Loading\Employee Data Retrieval"
+          TopLeft="214,47" />
+        <EdgeLayout
+          Id="Package\Source Loading.Paths[OLE DB Source Output]"
+          TopLeft="314.25,89">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Source Loading.Paths[Derived Column Output]"
+          TopLeft="311.75,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82"
+              Start="0,0"
+              End="0,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Source Loading\Loading into Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Source Loading\Employee Data Retrieval">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
